@@ -52,5 +52,5 @@ jobs:
           AWS_REGION: 'us-west-1'  
         run: |
           npm install -g aws-cli
-          aws s3 sync dist/ s3://hackaton-vinneren2024 --delete
-Merge branch 'main' of github.com:jsalinas1616/hackathon · jsalinas1616/hackathon@4e52c75
+          aws s3 sync dist/ s3://hackathon-admin --delete
+

@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3  # Actualiza a v3
         with:
-          node-version: '21.6.1'  # Usar Node.js 21.6.1
+          node-version: '18.19'  # Usar Node.js 21.6.1
 
       - name: Install Dependencies
         run: npm install --legacy-peer-deps

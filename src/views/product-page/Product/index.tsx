@@ -12,6 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Cookies from 'js-cookie';
 
 
 const validationSchema = yup.object().shape({
@@ -23,10 +24,6 @@ const validationSchema = yup.object().shape({
     priceSell: yup.number().required('El precio de venta es requerido').positive('El precio debe ser positivo'),
     profitMargin: yup.number().required('El margen de beneficio es requerido').min(0, 'El margen no puede ser negativo'),
     unities: yup.string().required('Las unidades son requeridas'),
-    initDate: yup.date().required('La fecha de inicio es requerida'),
-    endDate: yup.date()
-        .required('La fecha de fin es requerida')
-        .min(yup.ref('initDate'), 'La fecha de fin debe ser posterior a la fecha de inicio'),
     campaing: yup.string().required('La campaña es requerida'),
 });
 
@@ -57,12 +54,13 @@ const FormProduct = ({ field, form, ...other }: any) => {
     const [previewUrl, setPreviewUrl] = useState('');
     const [weekDays, setWeekDays] = React.useState<string[]>([]);
     const [open, setOpen] = React.useState(false);
+    
     const handleChangeSelectedImage = (event: any) => {
         const file = event.currentTarget.files[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setPreviewUrl(imageUrl);
-            form.setFieldValue(field.name, file); // Set the form field to the file object
+
         }
     };
     const handleChangeMultipleSelect = (event: SelectChangeEvent<typeof weekDays>) => {
@@ -288,6 +286,17 @@ const FormProduct = ({ field, form, ...other }: any) => {
                     "unities": values.unities
                 }
 
+
+                const valueAuth = Cookies.get('authentication')
+                let productsTocken;
+                try {
+                  productsTocken = valueAuth ? valueAuth : 'adsfasdfasf';
+                } catch (error) {
+                  console.error("Error al analizar valueAuth:", error);
+                  productsTocken = 'asdfasf'; // Usar valor predeterminado en caso de error
+                }
+
+
                 let url = "https://trpc-services-template-7pheze4h7q-uc.a.run.app/api/items"
                 fetch(url, {
                     method: "POST", // or 'PUT'
@@ -295,7 +304,7 @@ const FormProduct = ({ field, form, ...other }: any) => {
                     headers: {
                         "Content-Type": "application/json",
                         "accept": "text/plain",
-                        "authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc5M2Y3N2Q0N2ViOTBiZjRiYTA5YjBiNWFkYzk2ODRlZTg1NzJlZTYiLCJ0eXAiOiJKV1QifQ.eyJyb2xlcyI6WyJhZG1pbiJdLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbG9vbHUtMzc4NTE2IiwiYXVkIjoibG9vbHUtMzc4NTE2IiwiYXV0aF90aW1lIjoxNzIwMjYxMzIzLCJ1c2VyX2lkIjoiNDRQcXRoanVzNGVWRmNIOFRGalEya0x1ekJ6MSIsInN1YiI6IjQ0UHF0aGp1czRlVkZjSDhURmpRMmtMdXpCejEiLCJpYXQiOjE3MjAyNjEzMjMsImV4cCI6MTcyMDI2NDkyMywiZW1haWwiOiJhcGlrZXlfN2NlM2M3OWQtMWQwMS00NzdhLWEwMzktMDVlYjYzOWMzMDdiQDNmZjQ4Nzg2LWZlZjItNGMyZC05N2ViLTIwNmNlZjk1ZjkwMi5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYXBpa2V5XzdjZTNjNzlkLTFkMDEtNDc3YS1hMDM5LTA1ZWI2MzljMzA3YkAzZmY0ODc4Ni1mZWYyLTRjMmQtOTdlYi0yMDZjZWY5NWY5MDIuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQiLCJ0ZW5hbnQiOiJsb2NhbGhvc3QtaXdzOHgifX0.FSlWbnnz5QbWZvf4QpNaR6mH7mGTfsEmICG_ijiHp4Umxsi0cYb_HqTH-mwbmodK01yGGbJdK68eY2Smff9KSSDONnTf_8u6x9NezXHZMZ-SPplM7x5YN1fj8EX4wbzwUnUH7NFwAa8Gu8_TLRvcdg2ck9V9tPYwLiRs-u0nFIzZkRKXnx1TAcVVmYsYyBxATIeNWzayEPoR9HkMyOxYoV3edBK1ouR9Rp50Jep1dP4hjYz1UQQn8Ozvj5peF2B53ur7D6acP9YuASjVR7w9nh09wxXevV8F1OlnXUGQ-CBXbNIdb9xC52XAVj0AOiVjhsS5TqFtoT5cjHQK349gaQ",
+                        "authorization": `Bearer`,
                     },
                 })
                     .then((res) => res.json())
@@ -458,67 +467,7 @@ const FormProduct = ({ field, form, ...other }: any) => {
                                         />
                                         <ErrorMessage name="unities" component="div" />
                                     </Grid>
-                                    <Grid item xs={12}>
 
-                                        <Field
-                                            as={TextField}
-                                            fullWidth
-                                            id="initDate"
-                                            type="date"
-                                            name="initDate"
-                                            label="Fecha de Inicio"
-                                            inputFormat="dd/MM/yyyy"
-                                            variant="outlined"
-                                        />
-
-                                        <ErrorMessage name="initDate" component="div" />
-                                    </Grid>
-                                    <Grid item xs={12}>
-
-                                        <Field
-                                            as={TextField}
-                                            fullWidth
-                                            id="endDate"
-                                            type="date"
-                                            name="endDate"
-                                            label="Fecha de Fin"
-                                            inputFormat="dd/MM/yyyy"
-                                            variant="outlined"
-                                        />
-
-                                        <ErrorMessage name="endDate" component="div" />
-                                    </Grid>
-                                    <Grid item xs={12} >
-                                        <FormControl fullWidth >
-                                            <InputLabel id="demo-multiple-chip-label">Dias de la semana</InputLabel>
-                                            <Select
-
-                                                labelId="demo-multiple-chip-label"
-                                                id="demo-multiple-chip"
-                                                multiple
-                                                value={weekDays}
-                                                onChange={handleChangeMultipleSelect}
-                                                input={<OutlinedInput id="select-multiple-chip" label="Dias de la semana" />}
-                                                renderValue={(selected) => (
-                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                                        {selected.map((value) => (
-                                                            <Chip key={value} label={value} />
-                                                        ))}
-                                                    </Box>
-                                                )}
-                                                MenuProps={MenuProps}
-                                            >
-                                                {names.map((name) => (
-                                                    <MenuItem
-                                                        key={name}
-                                                        value={name}
-                                                    >
-                                                        {name}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
 
                                     <Grid item xs={12}>
                                         <Field

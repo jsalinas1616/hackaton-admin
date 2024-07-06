@@ -49,7 +49,6 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        console.log('????-use')
         let url = "http://ec2-54-82-192-230.compute-1.amazonaws.com/service/api/admin/campaign"
         fetch(url, {
             headers: {

@@ -109,6 +109,31 @@ const FormCampaingn = () => {
     let productsTocken;
     try {
       productsTocken = valueAuth ? valueAuth : productsDomy;
+
+      let url = "https://trpc-services-template-7pheze4h7q-uc.a.run.app/api/items?catalog=main&limit=10"
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "authorization": `Bearer ${productsTocken}`,
+        "accept": "text/plain"
+      },
+    })
+      .then((res) => res.json())
+      .catch((error) => console.error("Error:", error))
+      .then((response) => {
+        console.log("Success:", response)
+        if (response.message == undefined) {
+
+          setProducts(response)
+        } else {
+          setProducts(productsDomy)
+        }
+      });
+
+
+
+
+     
     } catch (error) {
       console.error("Error al analizar valueAuth:", error);
       productsTocken = productsDomy; // Usar valor predeterminado en caso de error

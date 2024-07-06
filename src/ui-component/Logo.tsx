@@ -23,7 +23,9 @@ const Logo = () => {
          *
          */
 
+        <div style={{textAlignLast:'center'}}>
         <img src={theme.palette.mode === 'dark' ? logo: logo} alt="Berry" width="100" />
+        </div>
 
     );
 };

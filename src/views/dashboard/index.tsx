@@ -8,101 +8,13 @@ import MainCard from 'ui-component/cards/MainCard';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
-const products = [
-
-    {
-        "offerId": "string",
-        "campaignId": "string",
-        "productId": "string",
-        "clientId": "string",
-        "numberPhone": "string",
-        "sku": "string",
-        "offerAmount": 0,
-        "originalAmount": 0,
-        "maxPurchaseDate": "2024-07-06T13:31:08.163Z",
-        "zipCode": "string",
-        "orderReference": "string",
-        "status": 0,
-        "statusDescription": "string",
-        "paymentType": "string",
-        "paymentReference": "string",
-        "customData": {
-            "additionalProp1": "string",
-            "additionalProp2": "string",
-            "additionalProp3": "string"
-        }
-    }, {
-        "offerId": "string",
-        "campaignId": "string",
-        "productId": "string",
-        "clientId": "string",
-        "numberPhone": "string",
-        "sku": "string",
-        "offerAmount": 0,
-        "originalAmount": 0,
-        "maxPurchaseDate": "2024-07-06T13:31:08.163Z",
-        "zipCode": "string",
-        "orderReference": "string",
-        "status": 1,
-        "statusDescription": "string",
-        "paymentType": "string",
-        "paymentReference": "string",
-        "customData": {
-            "additionalProp1": "string",
-            "additionalProp2": "string",
-            "additionalProp3": "string"
-        }
-    }, {
-        "offerId": "string",
-        "campaignId": "string",
-        "productId": "string",
-        "clientId": "string",
-        "numberPhone": "string",
-        "sku": "string",
-        "offerAmount": 3,
-        "originalAmount": 0,
-        "maxPurchaseDate": "2024-07-06T13:31:08.163Z",
-        "zipCode": "string",
-        "orderReference": "string",
-        "status": 3,
-        "statusDescription": "string",
-        "paymentType": "string",
-        "paymentReference": "string",
-        "customData": {
-            "additionalProp1": "string",
-            "additionalProp2": "string",
-            "additionalProp3": "string"
-        }
-    }, {
-        "offerId": "string",
-        "campaignId": "string",
-        "productId": "string",
-        "clientId": "string",
-        "numberPhone": "string",
-        "sku": "string",
-        "offerAmount": 3,
-        "originalAmount": 0,
-        "maxPurchaseDate": "2024-07-06T13:31:08.163Z",
-        "zipCode": "string",
-        "orderReference": "string",
-        "status": 2,
-        "statusDescription": "string",
-        "paymentType": "string",
-        "paymentReference": "string",
-        "customData": {
-            "additionalProp1": "string",
-            "additionalProp2": "string",
-            "additionalProp3": "string"
-        }
-    }
-];
 
 const Dashboard = () => {
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
     const [search, setSearch] = useState('');
     const [campaign, setCampaign] = useState<any>([])
     const [user, setUser] = useState<any>([])
-    const [offers, setOffers] = useState([])
+    const [offers, setOffers] = useState<any>([])
 
     const handleTabChange = (e: any, tabIndex: number) => {
         setCurrentTabIndex(tabIndex);
@@ -117,24 +29,6 @@ const Dashboard = () => {
             product.sku.toLowerCase().includes(search.toLowerCase())
         );
     };
-
-    const switchStatus = (status: any) => {
-        switch (status) {
-            case 0:
-                return <p style={{ color: "orange" }}>Pendiente</p>
-            case 1:
-                return <p style={{ color: "green" }}>Aceptado</p>
-            case 2:
-                return <p style={{ color: "grey" }}>Incompleto</p>
-            case 3:
-                return <p style={{ color: "red" }}>Recazado</p>
-
-
-            default:
-                break;
-        }
-
-    }
 
 
     useEffect(() => {
@@ -195,15 +89,15 @@ const Dashboard = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {products.filter(filterProducts).slice(0, 10).map((producto) => (
-                                            <TableRow key={producto?.offerId}>
-                                                <TableCell>{producto?.offerId}</TableCell>
-                                                <TableCell>{producto?.clientId}</TableCell>
-                                                <TableCell>{producto?.numberPhone}</TableCell>
-                                                <TableCell>{producto.sku}</TableCell>
-                                                <TableCell>{producto.originalAmount}</TableCell>
-                                                <TableCell>{producto.offerAmount}</TableCell>
-                                                <TableCell>{switchStatus(producto.status)}</TableCell>
+                                        {offers.filter(filterProducts).slice(0, 10).map((product:any) => (
+                                            <TableRow key={product?.offerId}>
+                                                <TableCell>{product?.offerId}</TableCell>
+                                                <TableCell>{product?.clientId}</TableCell>
+                                                <TableCell>{product?.numberPhone}</TableCell>
+                                                <TableCell>{product.sku}</TableCell>
+                                                <TableCell>{product.originalAmount}</TableCell>
+                                                <TableCell>{product.offerAmount}</TableCell>
+                                                <TableCell>{product.status == 2 ? <p style={{ color: "green" }}>Aceptado</p> : <p style={{ color: "red" }}>Recazado</p> }</TableCell>
                                                 {/* <TableCell>
                                                 { producto.liked ? <FavoriteIcon /> : <FavoriteBorderIcon/> }
                                             </TableCell> */}

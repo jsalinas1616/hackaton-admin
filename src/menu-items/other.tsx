@@ -21,10 +21,10 @@ const other: NavItemType = {
     type: 'group',
     children: [
         {
-            id: 'dashbard',
-            title: <FormattedMessage id="dashbard" />,
+            id: 'dashboard',
+            title: <FormattedMessage id="dashboard" />,
             type: 'item',
-            url: '/dashbard',
+            url: '/dashboard',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },

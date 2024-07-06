@@ -5,12 +5,12 @@ import AuthGuard from 'utils/route-guard/AuthGuard';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 
-
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+const Dashboard = Loadable(lazy(() => import('views/dashboard')));
 const ProductPage = Loadable(lazy(() => import('views/product-page')));
+const Campaigns = Loadable(lazy(() => import('views/campaigns')));
 
-// ==============================|| MAIN ROUTING ||============================== //
+// ============================== MAIN ROUTING ============================== //
 
 const MainRoutes = {
     path: '/',
@@ -22,21 +22,20 @@ const MainRoutes = {
     children: [
         {
             path: '/',
-            element: <SamplePage />
+            element: <Dashboard />
         },
         {
-            path: '/sample-page',
-            element: <SamplePage />
-        },
-        {
-            path: '/sample-page',
-            element: <SamplePage />
+            path: '/dashboard',
+            element: <Dashboard />
         },
         {
             path: '/product-page',
             element: <ProductPage />
         },
-        
+        {
+            path: '/campaigns',
+            element: <Campaigns />
+        }
     ]
 };
 

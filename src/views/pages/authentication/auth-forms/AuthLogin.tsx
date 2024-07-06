@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -55,6 +56,32 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
         }
     };
 
+
+    const fetchAuthToken = async () => {
+        try {
+          const response = await fetch('https://trpc-services-template-7pheze4h7q-uc.a.run.app/api/auth/token', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Cookie': 'GAESA=CoQBMDA1YjcwODc3MGYxNmM2NmU1MTBlZGZkYzFjYjc2YzVlOTBmNzE4OTk2ZDQyZGE5MWMzZjVhMjNlODE3OTQ3MjU0YTJhODAxYTcyNjllNDliYmMzMTA0NzQyYWNjM2E0YjJmYjk5YzJhYjQ0YWEzMzljOTMxNzc5OTYwOTA3ZDEzNjYwEPDVkviHMg; GAESA=CoIBMDA1YjcwODc3MDAyMjRlZWNjN2EyNmU4MWI1NTNiOWZmZDA2OGViOTJjNGRkYmVlZTczZGM2ZWZkN2YxNTU2MDA2N2VkMTNhZGZhYzQ2ODZlMjAwZWQzNTA1N2RiMjU0NGExNDJhMTY2MWEyMjcxMmQyMTZjMDAzY2ZlMDI2MmI1NBDBzO29iDI'
+            },
+            body: JSON.stringify({
+              apiKey: "NTFlZWVmMjllYjk2MTRmNTVhYjgwZTMyNTdhMWFlNTI3YzA1ZjcyZDFiNzE2YTQzZjI1YTAzNzRlMzhkMjM4OWY3Mzg4OTExMjliZTM0YmMxOWY2NWMzN2NjZDgwZTJlNWM2ZThjNjgzNWVmMzVjMDg0YTE2M2E4N2E2MmI4MTc5MzIxMDlkZGZhYTE5Y2NiZmYzZDNiMTBmODFkZmMwYWJiMzhkZTBjN2UwMTA2ZDYzMDdmODYzNDgwMjBlZGY0ZjlkNGU0ZWM4NDkwMjdjZGI2OWU2ZGY4NjBhOGFlN2UyYTQ5MDUzOWI1YTRhOTUwOTNkNWFhOWMyNDk3MzBjZWIxNTQ5OGM0ZTJiZjhhMzk1MzkzZjY4NWI1N2JiY2YxODI1NTdkYzJkYjNkY2IwZjMyMWI4NjkxYzE2ZTdmZTQ"
+            })
+          });
+      
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+      
+          const data = await response.json();
+          console.log('??? -data', data);
+          Cookies.set('authentication', data.authToken, { expires: 1/24 });
+        } catch (error) {
+          console.error('Error fetching auth token:', error);
+        }
+      };
+
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -88,7 +115,8 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                     try {
                         await firebaseEmailPasswordSignIn(values.email, values.password).then(
                             () => {
-                                // Advertencia: no establecer ningún estado de Formik aquí ya que Formik podría ya estar destruido en este punto.
+                                
+                                fetchAuthToken();
                             },
                             (err: any) => {
                                 console.error('error', err);

@@ -1,24 +1,3 @@
-Skip to content
-Navigation Menu
-jsalinas1616
-/
-hackathon
-
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Deploy to S3
-Merge branch 'main' of github.com:jsalinas1616/hackathon #4
-Jobs
-Run details
-Workflow file for this run
-.github/workflows/deploy.yml at 4e52c75
 name: Deploy to S3
 
 on:

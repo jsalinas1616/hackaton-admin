@@ -32,4 +32,4 @@ jobs:
           AWS_REGION: 'us-west-1'  
         run: |
           npm install -g aws-cli
-          aws s3 sync dist/ s3://hackathon-admin --delete
+          aws s3 sync build/ s3://hackathon-admin --delete

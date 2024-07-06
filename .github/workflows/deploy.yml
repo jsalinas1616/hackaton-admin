@@ -11,18 +11,19 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3  # Actualiza a v3
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # Actualiza a v3
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.19'  # Usar Node.js 21.6.1
+          node-version: '18.19'  # Asegúrate de que esta es la versión que deseas usar
 
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
       - name: Build
-        run: npm run build
+        run: CI=false npm run build
+        # Esto previene que las advertencias sean tratadas como errores.
 
       - name: Deploy to S3
         env:
@@ -32,7 +33,3 @@ jobs:
         run: |
           npm install -g aws-cli
           aws s3 sync dist/ s3://hackathon-admin --delete
-
-
-
-

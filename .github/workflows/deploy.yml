@@ -21,6 +21,9 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Install AWS CLI
+        run: pip install awscli
+        
       - name: Build
         run: CI=false npm run build
         # Esto previene que las advertencias sean tratadas como errores.

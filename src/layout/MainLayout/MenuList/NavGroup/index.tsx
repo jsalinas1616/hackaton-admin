@@ -144,12 +144,6 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }: NavGroupProps) => {
                 return <NavCollapse key={menu.id} menu={menu} level={1} parentId={currentItem.id!} />;
             case 'item':
                 return <NavItem key={menu.id} item={menu} level={1} parentId={currentItem.id!} />;
-            default:
-                return (
-                    <Typography key={menu.id} variant="h6" color="error" align="center">
-                        Menu Items Error
-                    </Typography>
-                );
         }
     });
 

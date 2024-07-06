@@ -28,11 +28,10 @@ const AuthForgotPassword = ({ ...others }) => {
         <Formik
             initialValues={{
                 email: '',
-                password: '',
                 submit: null
             }}
             validationSchema={Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required')
+                email: Yup.string().email('Debe ser un correo electrónico válido').max(255).required('El correo electrónico es obligatorio')
             })}
             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                 try {
@@ -44,7 +43,7 @@ const AuthForgotPassword = ({ ...others }) => {
                         dispatch(
                             openSnackbar({
                                 open: true,
-                                message: 'Check mail for reset password link',
+                                message: 'Revisa tu correo para el enlace de restablecimiento de contraseña',
                                 variant: 'alert',
                                 alert: {
                                     color: 'success'
@@ -69,7 +68,7 @@ const AuthForgotPassword = ({ ...others }) => {
             {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                 <form noValidate onSubmit={handleSubmit} {...others}>
                     <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                        <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address / Username</InputLabel>
+                        <InputLabel htmlFor="outlined-adornment-email-forgot">Correo Electrónico / Nombre de Usuario</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-email-forgot"
                             type="email"
@@ -77,7 +76,7 @@ const AuthForgotPassword = ({ ...others }) => {
                             name="email"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            label="Email Address / Username"
+                            label="Correo Electrónico / Nombre de Usuario"
                             inputProps={{}}
                         />
                         {touched.email && errors.email && (
@@ -104,7 +103,7 @@ const AuthForgotPassword = ({ ...others }) => {
                                 variant="contained"
                                 color="secondary"
                             >
-                                Send Mail
+                                Enviar Correo
                             </Button>
                         </AnimateButton>
                     </Box>

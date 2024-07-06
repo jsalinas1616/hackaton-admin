@@ -29,22 +29,12 @@ const other: NavItemType = {
             breadcrumbs: false
         },
         {
-            id: 'documentation',
-            title: <FormattedMessage id="documentation" />,
+            id: 'product-page',
+            title: <FormattedMessage id="Producto" />,
             type: 'item',
-            url: 'https://codedthemes.gitbook.io/berry/',
-            icon: icons.IconHelp,
-            external: true,
-            target: true
-        },
-        {
-            id: 'roadmap',
-            title: <FormattedMessage id="roadmap" />,
-            type: 'item',
-            url: 'https://codedthemes.gitbook.io/berry/roadmap',
-            icon: icons.IconSitemap,
-            external: true,
-            target: true
+            url: '/product-page',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
         }
     ]
 };

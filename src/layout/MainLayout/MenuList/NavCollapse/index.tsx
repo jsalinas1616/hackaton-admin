@@ -171,12 +171,6 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
                 return <NavCollapse key={item.id} menu={item} level={level + 1} parentId={parentId} />;
             case 'item':
                 return <NavItem key={item.id} item={item} level={level + 1} parentId={parentId} />;
-            default:
-                return (
-                    <Typography key={item.id} variant="h6" color="error" align="center">
-                        Menu Items Error
-                    </Typography>
-                );
         }
     });
 

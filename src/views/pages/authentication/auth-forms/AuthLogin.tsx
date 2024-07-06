@@ -67,63 +67,9 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
     return (
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
-                <Grid item xs={12}>
-                    <AnimateButton>
-                        <Button
-                            disableElevation
-                            fullWidth
-                            onClick={googleHandler}
-                            size="large"
-                            variant="outlined"
-                            sx={{
-                                color: 'grey.700',
-                                backgroundColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.grey[50],
-                                borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.light + 20 : theme.palette.grey[100]
-                            }}
-                        >
-                            <Box sx={{ display: 'flex', mr: { xs: 1, sm: 2, width: 20 } }}>
-                                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-                            </Box>
-                            Sign in with Google
-                        </Button>
-                    </AnimateButton>
-                </Grid>
-                <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            alignItems: 'center',
-                            display: 'flex'
-                        }}
-                    >
-                        <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-
-                        <Button
-                            variant="outlined"
-                            sx={{
-                                cursor: 'unset',
-                                m: 2,
-                                py: 0.5,
-                                px: 7,
-                                borderColor:
-                                    theme.palette.mode === 'dark'
-                                        ? `${theme.palette.dark.light + 20} !important`
-                                        : `${theme.palette.grey[100]} !important`,
-                                color: `${theme.palette.grey[900]}!important`,
-                                fontWeight: 500,
-                                borderRadius: `${borderRadius}px`
-                            }}
-                            disableRipple
-                            disabled
-                        >
-                            OR
-                        </Button>
-
-                        <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-                    </Box>
-                </Grid>
                 <Grid item xs={12} container alignItems="center" justifyContent="center">
                     <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle1">Sign in with Email address</Typography>
+                        <Typography variant="subtitle1">Inicia sesión con usuario y contraseña</Typography>
                     </Box>
                 </Grid>
             </Grid>
@@ -135,23 +81,19 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    email: Yup.string().email('Debe ser un correo válido').max(255).required('El correo es obligatorio'),
+                    password: Yup.string().max(255).required('La contraseña es obligatoria')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         await firebaseEmailPasswordSignIn(values.email, values.password).then(
                             () => {
-                                // WARNING: do not set any formik state here as formik might be already destroyed here. You may get following error by doing so.
-                                // Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application.
-                                // To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-                                // github issue: https://github.com/formium/formik/issues/2430
+                                // Advertencia: no establecer ningún estado de Formik aquí ya que Formik podría ya estar destruido en este punto.
                             },
                             (err: any) => {
                                 console.error('error', err);
                                 if (scriptedRef.current) {
                                     setStatus({ success: false });
-                                    // Verifica el tipo de error y establece un mensaje de error personalizado
                                     let errorMessage = err.message;
                                     if (err.code === 'auth/invalid-login-credentials') {
                                         errorMessage = 'Correo electrónico o contraseña incorrectos. Por favor, intenta de nuevo.';
@@ -174,7 +116,7 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit} {...others}>
                         <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-email-login">Correo electrónico</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-login"
                                 type="email"
@@ -182,7 +124,7 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                                 name="email"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                label="Email Address / Username"
+                                label="Correo electrónico"
                                 inputProps={{}}
                             />
                             {touched.email && errors.email && (
@@ -197,7 +139,7 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                             error={Boolean(touched.password && errors.password)}
                             sx={{ ...theme.typography.customInput }}
                         >
-                            <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-password-login">Contraseña</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password-login"
                                 type={showPassword ? 'text' : 'password'}
@@ -218,7 +160,7 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                label="Password"
+                                label="Contraseña"
                                 inputProps={{}}
                             />
                             {touched.password && errors.password && (
@@ -237,20 +179,20 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                                         color="primary"
                                     />
                                 }
-                                label="Remember me"
+                                label="Recuérdame"
                             />
                             <Typography
                                 variant="subtitle1"
                                 component={Link}
                                 to={
                                     loginProp
-                                        ? `/pages/forgot-password/forgot-password${loginProp}`
-                                        : '/pages/forgot-password/forgot-password3'
+                                        ? `/forgot${loginProp}`
+                                        : '/forgot'
                                 }
                                 color="secondary"
                                 sx={{ textDecoration: 'none' }}
                             >
-                                Forgot Password?
+                                ¿Olvidaste tu contraseña?
                             </Typography>
                         </Stack>
                         {errors.submit && (
@@ -270,7 +212,7 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Sign in
+                                    Ingresar
                                 </Button>
                             </AnimateButton>
                         </Box>

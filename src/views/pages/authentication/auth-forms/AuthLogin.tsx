@@ -148,9 +148,15 @@ const FirebaseLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                                 // github issue: https://github.com/formium/formik/issues/2430
                             },
                             (err: any) => {
+                                console.error('error', err);
                                 if (scriptedRef.current) {
                                     setStatus({ success: false });
-                                    setErrors({ submit: err.message });
+                                    // Verifica el tipo de error y establece un mensaje de error personalizado
+                                    let errorMessage = err.message;
+                                    if (err.code === 'auth/invalid-login-credentials') {
+                                        errorMessage = 'Correo electrónico o contraseña incorrectos. Por favor, intenta de nuevo.';
+                                    }
+                                    setErrors({ submit: errorMessage });
                                     setSubmitting(false);
                                 }
                             }

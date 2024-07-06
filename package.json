@@ -1,5 +1,5 @@
 {
-    "name": "berry-material-react-ts",
+    "name": "lamda-legengs",
     "version": "3.2.1",
     "private": true,
     "dependencies": {
@@ -22,8 +22,9 @@
         "firebase": "^9.9.4",
         "formik": "^2.2.9",
         "framer-motion": "^7.2.1",
-        "material-ui-popup-state": "^4.0.2",
+        "js-cookie": "^3.0.5",
         "lodash": "^4.17.21",
+        "material-ui-popup-state": "^4.0.2",
         "react": "^18.2.0",
         "react-apexcharts": "^1.4.0",
         "react-app-rewired": "^2.2.1",
@@ -80,6 +81,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.19.0",
+        "@types/js-cookie": "^3.0.6",
         "@types/react": "^18.0.20",
         "@types/react-dom": "^18.0.5",
         "@types/react-redux": "^7.1.24",

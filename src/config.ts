@@ -9,13 +9,13 @@ export const JWT_API = {
 };
 
 export const FIREBASE_API = {
-    apiKey: 'AIzaSyBernKzdSojh_vWXBHt0aRhf5SC9VLChbM',
-    authDomain: 'berry-material-react.firebaseapp.com',
-    projectId: 'berry-material-react',
-    storageBucket: 'berry-material-react.appspot.com',
-    messagingSenderId: '901111229354',
-    appId: '1:901111229354:web:a5ae5aa95486297d69d9d3',
-    measurementId: 'G-MGJHSL8XW3'
+    apiKey: "AIzaSyB23UsPzcz6h_aoZXi0BGRZ2pSC3W8P2Ik",
+    authDomain: "hackathon-2d5b3.firebaseapp.com",
+    projectId: "hackathon-2d5b3",
+    storageBucket: "hackathon-2d5b3.appspot.com",
+    messagingSenderId: "1058311298695",
+    appId: "1:1058311298695:web:73ef4432ad31b6e094e222",
+    measurementId: "G-2FG82SPEV1"
 };
 
 export const AUTH0_API = {
